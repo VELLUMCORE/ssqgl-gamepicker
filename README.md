@@ -8,8 +8,6 @@ This project implements **SSQGL (Seeded Stratified Quality-Gated Lottery)**:
 - **Quality-gated**: avoids low-quality picks dominating the pool.
 - **Lottery**: still random, but controlled and explainable.
 
----
-
 ## Why SSQGL?
 
 Common selectors fail in predictable ways:
@@ -19,14 +17,10 @@ Common selectors fail in predictable ways:
 
 SSQGL aims for **fair variety + minimum quality + transperency + reproducibility**.
 
----
-
 ## Core idea
 Each cycle, the app builds a **snapshot** of candidates (so the pool is fixed for that cycle).
 It splits candidates into **MAIN** (passes a quality threshold) and **EXPLORE** (data-poor/new/long-tail items) with a fixed probability mass (e.g. 20%).
 Then it **stratifies** candidates by **genre x popularity bin x source**, allocates selection mass per stratum (with a small "genre floor" so no genre goes to 0), and performs a **seeded weighted draw** using a softened probability transform (temperature/softmax) so top scores don't completely dominate.
-
----
 
 ## Features
 
@@ -37,8 +31,6 @@ Then it **stratifies** candidates by **genre x popularity bin x source**, alloca
 - ✅ Seeded results (fully reproducible)
 - ✅ Explainable output (why this game was picked)
 - ✅ "No reroll" rule: if the chosen title is unplayable, pick the next candidate **in the same seeded order**
-
----
 
 ## Installation
 
