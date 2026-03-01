@@ -1,0 +1,77 @@
+{
+  "seed_policy": { "template": "{date}|{phrase}", "phrase": "pickee2" },
+
+  "snapshot": {
+    "shortlist_size": 2000,
+    "seed_suffix": "|snapshot",
+    "source_mix": { "steam": 0.75, "gog": 0.25 }
+  },
+
+  "sources": {
+    "steam": {
+      "enabled": true,
+      "discovery": {
+        "cc": "KR",
+        "l": "koreana",
+
+        "target_appids": 20000,
+
+        "channels": [
+          { "kind": "featuredcategories", "bucket": "top_sellers", "take": 500 },
+          { "kind": "featuredcategories", "bucket": "new_releases", "take": 500 },
+          { "kind": "featuredcategories", "bucket": "specials", "take": 500 },
+
+          { "kind": "search", "filter": "topsellers", "start_mode": "sequential", "pages": 30, "count": 50, "take": 2000 },
+          { "kind": "search", "filter": "popularnew", "start_mode": "sequential", "pages": 30, "count": 50, "take": 2000 },
+
+          { "kind": "search", "filter": "popular", "start_mode": "random_deep", "pages": 80, "count": 50, "take": 6000, "max_start_blocks": 600 }
+        ],
+
+        "retry": { "max_attempts": 6, "base_sleep_sec": 1.0, "max_sleep_sec": 30.0 },
+
+        "cache_ttl_hours": 336,
+
+        "content_safety": {
+          "max_required_age": 17,
+          "exclude_content_descriptors": [1, 3, 4]
+        }
+      },
+
+      "enrich": {
+        "request_min_interval_sec": 1.6,
+        "retry": { "max_attempts": 6, "base_sleep_sec": 1.0, "max_sleep_sec": 30.0 }
+      }
+    },
+
+    "gog": {
+      "enabled": true,
+      "discovery": {
+        "target_products": 4000,
+        "sorts": ["popularity", "rating", "date"],
+        "page_mode": "random",
+        "limit": 48,
+        "max_pages_tried": 400,
+        "random_page_max": 200,
+        "retry": { "max_attempts": 6, "base_sleep_sec": 1.0, "max_sleep_sec": 30.0 },
+        "cache_ttl_hours": 336
+      }
+    },
+
+    "local": { "enabled": false, "path": null }
+  },
+
+  "filters": {
+    "exclude_tags": ["Horror"],
+    "exclude_app_types": ["DLC", "Soundtrack", "Tool"]
+  },
+
+  "quality_gate": {
+    "explore_mass": 0.20,
+    "steam": { "wilson_lb_min": 0.75, "min_reviews": 200 },
+    "metascore_min": 70
+  },
+
+  "stratify": { "popularity_bins": 3, "genre_floor_eps": 0.02 },
+
+  "weights": { "wQ": 0.55, "wS": 0.30, "wN": 0.10, "wC": 0.05, "temperature": 0.70 }
+}
