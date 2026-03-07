@@ -84,16 +84,19 @@ pip install -r requirements.txt
   }
 }
 ```
+기존 설정에서 아무것도 건들이지 않아도 됩니다.
 
 2) 후보 스냅샷 생성
 ```bash
 python -m ssqgl snapshot --config config.json --out snapshots/
 ```
+--out에 지정한 경로에 스냅샷이 생성됩니다.
 
 3) 게임 1개 선정
 ```bash
 python -m ssqgl pick --config config.json --snapshot snapshots/2026-03-01.json
 ```
+--config과 --snapshot을 기준으로 게임을 선정합니다.
 
 출력 예시:
 ```plain text
